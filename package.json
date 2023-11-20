@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "postinstall": "prisma generate",
-    "build": "prisma generate && remix build",
+    "build": "remix build",
     "predev": "prisma generate && prisma migrate deploy",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
@@ -20,7 +20,7 @@
     "prisma": "prisma"
   },
   "dependencies": {
-    "@prisma/client": "^4.13.0",
+    "@prisma/client": "^5.6.0",
     "@remix-run/dev": "^2.0.0",
     "@remix-run/node": "^2.0.0",
     "@remix-run/react": "^2.0.0",
@@ -32,7 +32,7 @@
     "@shopify/shopify-app-remix": "^2.1.0",
     "@shopify/shopify-app-session-storage-prisma": "^2.0.0",
     "isbot": "latest",
-    "prisma": "^5.6.0",
+    "prisma": "^4.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
