@@ -1,0 +1,112 @@
+<div class="countdown-addon">
+  <h1>Hello Ashoo</h1>
+  <h2 style="color: #333;">{{ block.settings.counter_title }}</h2>
+  <p style="color: #333;">{{ block.settings.counter_subtitle }}</p>
+  <div class="countdown-timer">
+    <div class="time days">00</div>
+    <span>:</span>
+    <div class="time hours">23</div>
+    <span>:</span>
+    <div class="time minutes">59</div>
+    <span>:</span>
+    <div class="time seconds">36</div>
+  </div>
+  <button class="cta-button">Secret Button</button>
+</div>
+
+<style>
+.countdown-addon {
+  text-align: center;
+  color: #333;
+  /* Additional styles */
+}
+
+.countdown-timer .time {
+  display: inline-block;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  min-width: 50px;
+  /* Additional styles for time boxes */
+}
+
+.cta-button {
+  padding: 10px 20px;
+  background-color: #f00;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  /* Additional button styles */
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+  const timeElements = {
+    days: document.querySelector('.time.days'),
+    hours: document.querySelector('.time.hours'),
+    minutes: document.querySelector('.time.minutes'),
+    seconds: document.querySelector('.time.seconds')
+  };
+
+  function updateTimeElement(element, time) {
+    element.textContent = time < 10 ? '0' + time : time;
+  }
+
+  function parseDate(dateStr) {
+    const parts = dateStr.split('-'); // Split the date by hyphen
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed in JavaScript Date
+    const year = parseInt(parts[2], 10);
+    return new Date(year, month, day);
+  }
+
+  function updateCountdown() {
+    const now = new Date();
+    const targetDate = parseDate("{{ block.settings.countdown_end_date }}");
+    const difference = targetDate - now;
+
+    if (difference > 0) {
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      updateTimeElement(timeElements.days, days);
+      updateTimeElement(timeElements.hours, Math.floor((difference / (1000 * 60 * 60)) % 24));
+      updateTimeElement(timeElements.minutes, Math.floor((difference / (1000 * 60)) % 60));
+      updateTimeElement(timeElements.seconds, Math.floor((difference / 1000) % 60));
+    } else {
+      Object.values(timeElements).forEach(element => updateTimeElement(element, 0));
+    }
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+});
+</script>
+
+{% schema %}
+{
+  "name": "Countdown Timer",
+  "class": "countdown-timer-block",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "counter_title",
+      "label": "Hello Text",
+      "default": "Hello, this is a simple text from the county extension!"
+    },
+    {
+      "type": "text",
+      "id": "counter_subtitle",
+      "label": "Hello Content",
+      "default": "Hello, this is a simple content!"
+    },
+    {
+      "type": "text",
+      "id": "countdown_end_date",
+      "label": "Countdown End Date",
+      "default": "23-11-2023"
+    }
+  ]
+}
+{% endschema %}

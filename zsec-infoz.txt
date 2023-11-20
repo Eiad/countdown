@@ -1,0 +1,5 @@
+0-remind yourself with our conversion exchange history.
+
+Please give me the full updated component back, no skins and no omissions, not even code comments
+
+sudo chown -R mohamedashraf:staff /Users/mohamedashraf/ash-dev/countdown/countdown

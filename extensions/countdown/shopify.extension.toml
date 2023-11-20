@@ -1,0 +1,7 @@
+name = "county"
+type = "theme"
+
+# Define blocks for your theme extension here
+[[blocks]]
+name = "hello"
+source = "blocks/hello.liquid"
