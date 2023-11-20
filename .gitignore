@@ -16,3 +16,4 @@ yarn.lock
 shopify.app.toml
 
 .DS_Store
+.vercel
