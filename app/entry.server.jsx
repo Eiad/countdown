@@ -13,7 +13,7 @@ export default async function handleRequest(
   responseHeaders,
   remixContext
 ) {
-  // Content-Security-Policy and remove X-Frame-Options
+  // Set the Content-Security-Policy header and remove X-Frame-Options
   responseHeaders.set(
     "Content-Security-Policy",
     "frame-ancestors 'self' https://admin.shopify.com https://*.myshopify.com"
@@ -21,6 +21,7 @@ export default async function handleRequest(
   responseHeaders.delete("X-Frame-Options");
 
   addDocumentResponseHeaders(request, responseHeaders);
+
   const callbackName = isbot(request.headers.get("user-agent"))
     ? "onAllReady"
     : "onShellReady";
@@ -37,7 +38,14 @@ export default async function handleRequest(
           const body = new PassThrough();
           const stream = createReadableStreamFromReadable(body);
 
+          // Ensure headers are set correctly
           responseHeaders.set("Content-Type", "text/html");
+          responseHeaders.set(
+            "Content-Security-Policy",
+            "frame-ancestors 'self' https://admin.shopify.com https://*.myshopify.com"
+          );
+          responseHeaders.delete("X-Frame-Options");
+
           resolve(
             new Response(stream, {
               headers: responseHeaders,
